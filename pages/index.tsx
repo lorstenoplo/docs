@@ -19,36 +19,23 @@ import DocumentRow from "../components/DocumentRow";
 import { useRouter } from "next/router";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FolderRoundedIcon from "@material-ui/icons/FolderRounded";
+import { useEffect } from "react";
 
 export default function Home() {
   const [session] = useSession();
   const [open, setOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
-  const [userDocs, setUerDocs] = useState<any>();
   const router = useRouter();
 
   if (!session) return <Login />;
 
-  // const [snapshot] = useCollectionOnce(
-  //   db
-  //     .collection("userDocs")
-  //     .doc(session.user.email)
-  //     .collection("docs")
-  //     .orderBy("timestamp", "desc")
-  // );
-
-  db.collection("userDocs")
-    .doc(session.user.email)
-    .collection("docs")
-    .orderBy("timestamp", "desc")
-    .onSnapshot((snapshot) =>
-      setUerDocs(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      )
-    );
+  const [snapshot] = useCollectionOnce(
+    db
+      .collection("userDocs")
+      .doc(session.user.email)
+      .collection("docs")
+      .orderBy("timestamp", "desc")
+  );
 
   const createDocument = async () => {
     if (input.trim() === "") return;
@@ -162,7 +149,7 @@ export default function Home() {
             <FolderRoundedIcon style={{ fontSize: "32px", color: "gray" }} />
           </div>
 
-          {userDocs?.map((doc) => (
+          {snapshot?.docs?.map((doc) => (
             <DocumentRow key={doc.id} doc={doc} />
           ))}
         </div>

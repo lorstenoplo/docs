@@ -3,29 +3,18 @@ import firebase from "firebase";
 import { useRouter } from "next/router";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { db } from "../firebase";
+import MoreVertRounded from "@material-ui/icons/MoreVertRounded";
 import { useSession } from "next-auth/client";
 
 type Props = {
-  doc: any;
+  doc: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>;
 };
 
 const DocumentRow: React.FC<Props> = ({ doc }) => {
   const id = doc.id;
-  const { fileName, timestamp } = doc.data;
+  const { fileName, timestamp } = doc.data();
   const router = useRouter();
   const [session] = useSession();
-
-  const deleteDoc = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    return db
-      .collection("userDocs")
-      .doc(session?.user?.email)
-      .collection("docs")
-      .doc(id)
-      .delete();
-  };
 
   return (
     <div
@@ -36,9 +25,9 @@ const DocumentRow: React.FC<Props> = ({ doc }) => {
         style={{ color: "rgba(33, 150, 243)", fontSize: "30px" }}
       />
       <p className="flex-grow pl-5 pr-10 w-10 truncate">{fileName}</p>
-      <p className="pr-5 text-sm">{timestamp?.toDate().toLocaleDateString()}</p>
-      <IconButton onClick={deleteDoc}>
-        <DeleteIcon />
+      <p className="pr-5 text-sm">{timestamp.toDate().toLocaleDateString()}</p>
+      <IconButton>
+        <MoreVertRounded />
       </IconButton>
     </div>
   );

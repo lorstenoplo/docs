@@ -46,6 +46,18 @@ const Doc = () => {
     router.replace("/");
   }
 
+  const deleteDoc = async (
+    e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
+  ) => {
+    await db
+      .collection("userDocs")
+      .doc(session?.user?.email)
+      .collection("docs")
+      .doc(router.query.id as string)
+      .delete();
+    router.replace("/");
+  };
+
   return (
     <div>
       <Head>
@@ -69,7 +81,9 @@ const Doc = () => {
             <p className="option">Insert</p>
             <p className="option">View</p>
             <p className="option">Format</p>
-            <p className="option">Tools</p>
+            <p className="option" onClick={(e) => deleteDoc(e)}>
+              Delete
+            </p>
           </div>
         </div>
 
