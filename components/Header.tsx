@@ -10,7 +10,7 @@ const Header = () => {
   const [session] = useSession();
 
   return (
-    <header className="sticky top-0 z-50 px-4 py-2  shadow-md flex items-center bg-white">
+    <header className="sticky top-0 z-50 px-2 md:px-4 py-2  shadow-md flex items-center bg-white">
       <IconButton className="!hidden sm:!flex border-0 mr-2">
         <MenuRoundedIcon />
       </IconButton>

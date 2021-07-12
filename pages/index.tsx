@@ -24,17 +24,31 @@ export default function Home() {
   const [session] = useSession();
   const [open, setOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
+  const [userDocs, setUerDocs] = useState<any>();
   const router = useRouter();
 
   if (!session) return <Login />;
 
-  const [snapshot] = useCollectionOnce(
-    db
-      .collection("userDocs")
-      .doc(session.user.email)
-      .collection("docs")
-      .orderBy("timestamp", "desc")
-  );
+  // const [snapshot] = useCollectionOnce(
+  //   db
+  //     .collection("userDocs")
+  //     .doc(session.user.email)
+  //     .collection("docs")
+  //     .orderBy("timestamp", "desc")
+  // );
+
+  db.collection("userDocs")
+    .doc(session.user.email)
+    .collection("docs")
+    .orderBy("timestamp", "desc")
+    .onSnapshot((snapshot) =>
+      setUerDocs(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      )
+    );
 
   const createDocument = async () => {
     if (input.trim() === "") return;
@@ -148,7 +162,7 @@ export default function Home() {
             <FolderRoundedIcon style={{ fontSize: "32px", color: "gray" }} />
           </div>
 
-          {snapshot?.docs.map((doc) => (
+          {userDocs?.map((doc) => (
             <DocumentRow key={doc.id} doc={doc} />
           ))}
         </div>
