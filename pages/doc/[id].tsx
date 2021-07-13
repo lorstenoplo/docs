@@ -37,6 +37,9 @@ const Doc = () => {
   if (loadingSnapshot) {
     return (
       <Backdrop className={classes.backdrop} open={true}>
+        <Head>
+          <title>Loading...</title>
+        </Head>
         <CircularProgress color="inherit" />
       </Backdrop>
     );
@@ -75,7 +78,7 @@ const Doc = () => {
 
         <div className="flex-grow px-2">
           <h2>{snapshot.data().fileName}</h2>
-          <div className="items-center hidden md:flex text-sm space-x-1 h-8 text-gray-600 -ml-3">
+          <div className="items-center hidden md:flex text-sm space-x-1 h-8 text-gray-600 -ml-2.5">
             <p className="option">File</p>
             <p className="option">Edit</p>
             <p className="option">Insert</p>

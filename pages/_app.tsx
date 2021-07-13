@@ -33,10 +33,25 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        {/* Material Icons Link */}
         <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet"
+          rel="icon"
+          href="https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico"
+          type="image/x-icon"
+        />
+        <meta
+          name="description"
+          content="A cool google docs clone created by Nishanth.M.Dipali"
+        />
+        <meta
+          name="og:description"
+          content="A cool google docs clone created by Nishanth.M.Dipali"
+        />
+        <meta property="og:title" content="Docsu: A Google docs clone" />
+        <meta property="og:url" content="https://docsu.vercel.app/" />
+        <meta property="og:ttl" content="604800" />
+        <meta
+          name="og:image"
+          content="https://www.gstatic.com/images/branding/product/2x/docs_2020q4_48dp.png"
         />
       </Head>
 

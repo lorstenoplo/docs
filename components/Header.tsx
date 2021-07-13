@@ -23,7 +23,7 @@ const Header = () => {
       </h1>
 
       {/* search box */}
-      <div className="flex flex-grow mx-2 md:!mx-10 items-center px-5 py-2 bg-gray-100 text-gray-600 rounded-md focus-within:shadow-md focus-within:text-black focus-within:ring-gray-100 focus-within:ring-2">
+      <div className="w-3/5 sm:w-full flex flex-grow mx-2 md:!mx-10 items-center px-5 py-2 bg-gray-100 text-gray-600 rounded-md focus-within:shadow-md focus-within:text-black focus-within:ring-gray-100 focus-within:ring-2">
         <SearchRoundedIcon />
         <input
           type="text"

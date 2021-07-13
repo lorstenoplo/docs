@@ -14,12 +14,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { useState } from "react";
 import { db } from "../firebase";
 import firebase from "firebase";
-import { useCollectionOnce } from "react-firebase-hooks/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 import DocumentRow from "../components/DocumentRow";
 import { useRouter } from "next/router";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FolderRoundedIcon from "@material-ui/icons/FolderRounded";
-import { useEffect } from "react";
 
 export default function Home() {
   const [session] = useSession();
@@ -29,7 +28,7 @@ export default function Home() {
 
   if (!session) return <Login />;
 
-  const [snapshot] = useCollectionOnce(
+  const [snapshot] = useCollection(
     db
       .collection("userDocs")
       .doc(session.user.email)
@@ -52,7 +51,7 @@ export default function Home() {
     setInput("");
     setOpen(false);
 
-    const id = (await doc.get()).id;
+    const id = doc.id;
     router.push(`/doc/${id}`);
   };
 
@@ -105,7 +104,6 @@ export default function Home() {
     <div>
       <Head>
         <title>Docs</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
