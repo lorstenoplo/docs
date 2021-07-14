@@ -25,6 +25,28 @@ button:focus {
   flex-wrap: wrap;
 }
 
+html {
+  flex: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar {
+  width: 1rem;
+}
+
+html::-webkit-scrollbar-track {
+  background: none;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  height: 10px;
+  background-clip: padding-box;
+  border: 3.5px solid rgba(0, 0, 0, 0);
+}
+
 @tailwind components;
 
 @layer components {
