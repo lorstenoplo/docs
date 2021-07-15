@@ -1,28 +1,46 @@
-import Head from "next/head";
-import Header from "../components/Header";
-import Image from "next/image";
-import { useSession, getSession } from "next-auth/client";
-import React from "react";
+import { makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useState } from "react";
-import { db } from "../firebase";
+import TextField from "@material-ui/core/TextField";
+import FolderRoundedIcon from "@material-ui/icons/FolderRounded";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import firebase from "firebase";
+import { getSession } from "next-auth/client";
+import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
 import DocumentRow from "../components/DocumentRow";
-import { useRouter } from "next/router";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import FolderRoundedIcon from "@material-ui/icons/FolderRounded";
+import Header from "../components/Header";
+import { db } from "../firebase";
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+    backgroundColor: "#1a73e8",
+    color: "white",
+    marginBottom: 15,
+  },
+  actions: {
+    paddingRight: 25,
+    paddingBottom: 15,
+    marginTop: 0,
+  },
+  btn: {
+    textTransform: "none",
+    backgroundColor: "#1a73e8",
+  },
+}));
 
 export default function Home({ session }) {
   const [open, setOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const router = useRouter();
+  const classes = useStyles();
 
   const [snapshot] = useCollection(
     db
@@ -66,7 +84,9 @@ export default function Home({ session }) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Create a New Doc</DialogTitle>
+        <DialogTitle className={classes.title} id="form-dialog-title">
+          Create a New Doc
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             To create a new document, please enter the name of the document
@@ -84,11 +104,16 @@ export default function Home({ session }) {
             onKeyDown={(e) => e.key === "Enter" && createDocument()}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
+        <DialogActions className={classes.actions}>
+          <Button style={{ textTransform: "none" }} onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={createDocument} color="primary">
+          <Button
+            className={classes.btn}
+            variant="contained"
+            onClick={createDocument}
+            color="primary"
+          >
             Create
           </Button>
         </DialogActions>

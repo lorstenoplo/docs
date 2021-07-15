@@ -1,17 +1,16 @@
-import Login from "../login";
-import { useSession, getSession, signOut } from "next-auth/client";
-import Link from "next/link";
-import TextEditor from "../../components/TextEditor";
-import { useDocumentOnce } from "react-firebase-hooks/firestore";
-import { db } from "../../firebase";
-import { useRouter } from "next/router";
-import Head from "next/head";
 import { Button } from "@material-ui/core";
-import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded";
-import DescriptionRoundedIcon from "@material-ui/icons/DescriptionRounded";
-import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
+import DescriptionRoundedIcon from "@material-ui/icons/DescriptionRounded";
+import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded";
+import { getSession, signOut } from "next-auth/client";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useDocumentOnce } from "react-firebase-hooks/firestore";
+import TextEditor from "../../components/TextEditor";
+import { db } from "../../firebase";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -20,12 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Doc = () => {
-  const [session] = useSession();
+const Doc = ({ session }) => {
   const router = useRouter();
   const classes = useStyles();
 
-  if (!session) return <Login />;
   const [snapshot, loadingSnapshot] = useDocumentOnce(
     db
       .collection("userDocs")
@@ -115,6 +112,12 @@ export default Doc;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: { destination: "/login" },
+    };
+  }
 
   return {
     props: {

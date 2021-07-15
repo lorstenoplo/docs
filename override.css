@@ -54,3 +54,7 @@ html::-webkit-scrollbar-thumb {
     @apply cursor-pointer hover:bg-gray-100 px-2.5 p-1 rounded-lg transition-all duration-500 ease-in-out;
   }
 }
+
+.MuiPaper-rounded {
+  border-radius: 15px !important;
+}

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import firebase from "firebase";
 import AssignmentIcon from "@material-ui/icons/Assignment";
-import { IconButton } from "@material-ui/core";
+import { IconButton, makeStyles } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useSession } from "next-auth/client";
 import { deleteDoc } from "../utils/functions";
-import Link from "next/link";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -18,12 +17,34 @@ type Props = {
   doc: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>;
 };
 
+const useStyles = makeStyles((theme) => ({
+  title: {
+    backgroundColor: "#e42b2b",
+    color: "white",
+    marginBottom: 15,
+  },
+  actions: {
+    paddingRight: 30,
+    paddingBottom: 15,
+    marginTop: 0,
+  },
+  btn: {
+    backgroundColor: "#e42b2b",
+    color: "white",
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: "#c32b2b",
+    },
+  },
+}));
+
 const DocumentRow: React.FC<Props> = ({ doc }) => {
   const id = doc.id;
   const { fileName, timestamp } = doc.data();
   const [session] = useSession();
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const classes = useStyles();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -40,7 +61,7 @@ const DocumentRow: React.FC<Props> = ({ doc }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
+      <DialogTitle className={classes.title} id="alert-dialog-title">
         {"Delete the document?"}
       </DialogTitle>
       <DialogContent>
@@ -50,14 +71,18 @@ const DocumentRow: React.FC<Props> = ({ doc }) => {
           database.
         </DialogContentText>
       </DialogContent>
-      <DialogActions style={{ paddingRight: 30, paddingBottom: 15 }}>
-        <Button onClick={handleClose} color="primary" autoFocus>
+      <DialogActions className={classes.actions}>
+        <Button
+          style={{ textTransform: "none" }}
+          onClick={handleClose}
+          autoFocus
+        >
           Cancel
         </Button>
         <Button
           onClick={() => deleteDoc({ email: session.user.email, id })}
-          color="secondary"
           variant="contained"
+          className={classes.btn}
         >
           Delete
         </Button>

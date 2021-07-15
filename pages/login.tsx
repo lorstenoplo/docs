@@ -19,14 +19,14 @@ function signin({ providers }) {
 
       {Object.values(providers).map((provider) => {
         return (
-          <div key={provider.name}>
+          <div key={(provider as any).name}>
             <Button
               variant="contained"
               color="primary"
-              onClick={() => signIn(provider.id)}
+              onClick={() => signIn((provider as any).id)}
               className="!mt-4 !w-56"
             >
-              Login
+              Login with Google
             </Button>
           </div>
         );
@@ -49,7 +49,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      providers: await providers(context),
+      providers: await providers(),
       csrfToken: await csrfToken(context),
     },
   };
