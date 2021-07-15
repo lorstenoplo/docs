@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ["links.papareact.com"],
+    domains: ["links.papareact.com", "ssl.gstatic.com"],
   },
   env: {
     firebase_config_api_key: process.env.FIREBASE_CONFIG_API_KEY,
