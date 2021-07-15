@@ -2,7 +2,6 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Image from "next/image";
 import { useSession, getSession } from "next-auth/client";
-import Login from "../components/Login";
 import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -20,13 +19,10 @@ import { useRouter } from "next/router";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FolderRoundedIcon from "@material-ui/icons/FolderRounded";
 
-export default function Home() {
-  const [session] = useSession();
+export default function Home({ session }) {
   const [open, setOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const router = useRouter();
-
-  if (!session) return <Login />;
 
   const [snapshot] = useCollection(
     db
@@ -158,6 +154,12 @@ export default function Home() {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: { destination: "/login" },
+    };
+  }
 
   return {
     props: {

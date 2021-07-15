@@ -1,4 +1,4 @@
-import Login from "../../components/Login";
+import Login from "../login";
 import { useSession, getSession, signOut } from "next-auth/client";
 import Link from "next/link";
 import TextEditor from "../../components/TextEditor";
