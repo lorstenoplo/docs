@@ -162,7 +162,7 @@ export default function Home({ session }) {
             <div>
               <div
                 onClick={handleClickOpen}
-                className="relative h-52 w-40 border-2 cursor-pointer hover:border-blue-600 transition-all"
+                className="relative h-52 w-40 border-2 cursor-pointer hover:border-blue-600 transition-all template"
               >
                 <Image
                   className="active:opacity-50"
@@ -182,7 +182,7 @@ export default function Home({ session }) {
                   setCreateLetter(true);
                   handleClickOpen();
                 }}
-                className="relative h-52 w-40 border-2 cursor-pointer hover:border-blue-600 transition-all"
+                className="relative h-52 w-40 border-2 cursor-pointer hover:border-blue-600 transition-all template"
               >
                 <Image
                   className="active:opacity-50"
