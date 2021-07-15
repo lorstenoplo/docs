@@ -65,6 +65,7 @@ const TextEditor: React.FC = () => {
   });
 
   const save = (data) => {
+    console.log(data);
     db.collection("userDocs")
       .doc(session.user.email)
       .collection("docs")
