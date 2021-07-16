@@ -62,6 +62,9 @@ const TextEditor: React.FC = () => {
           boxShadow: "rgb(60 64 67 / 15%) 0px 1px 3px 1px",
           boxSizing: "border-box",
           padding: "3.5rem",
+          [defaultTheme.breakpoints.down("sm")]: {
+            padding: "2rem",
+          },
         },
         placeHolder: {
           marginTop: "5rem",
